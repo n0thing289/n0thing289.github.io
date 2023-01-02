@@ -3,6 +3,7 @@ import cv2
 import math
 import re
 
+
 def get_video_frame_size(file_name):
     """获取视频分辨率，并返回视频分辨率"""
     cap = cv2.VideoCapture(file_name)
@@ -70,7 +71,6 @@ def is_repeat(files_list):
                 first_frame_size2 = value2[0]
                 first_video_byte2 = value2[1]
 
-
             if first_frame_size1 == first_frame_size2:
 
                 if first_video_byte1 == first_video_byte2:
@@ -83,7 +83,6 @@ def is_repeat(files_list):
 
 
 def mul_rename(files_list, input_name):
-
     all_video_info = bianli_(files_list)
     flag = input("按1在原来的名字增加字符,按2批量删去输入的字符,按下2之后在源码100行中修改删除的模式 asign")
     new_video_name = ""
@@ -140,7 +139,6 @@ def text_splitor(file_name, input_name, asign):
         return text
 
 
-
 """
 程序可以将指定目录下的视频文件，将分辨率比如1024*768，作为文件名写入到文件名后部，
 比如TOM.mp4变成 TOM1024-768.mp4  。另外，对于疑似重复的文件，大小、格式、播放时长一样（如果播放时长不好取样），
@@ -153,11 +151,11 @@ def text_splitor(file_name, input_name, asign):
 """
 
 
-def new_mul_rename(files, chongfu_liest,flag=1):
+def new_mul_rename(files, chongfu_liest, flag=1):
     all_video_info = bianli_(files)
     if flag == 1:
         for info_key, info_value in all_video_info.items():
-            name_list = info_key.split('.')  #  ["767","750-1000.","mp4"]
+            name_list = info_key.split('.')  # ["767","750-1000.","mp4"]
             # print(name_list)
 
             # 在何时插入
@@ -173,8 +171,8 @@ def new_mul_rename(files, chongfu_liest,flag=1):
             # print(info_key)# 别忘了是在新得基础上拆成列表
             os.rename(info_key, name)
 
-    if flag ==2:
-        #0000 1111 2222 3333 4444 5555 6666 7777 8888 9999 aaaa
+    if flag == 2:
+        # 0000 1111 2222 3333 4444 5555 6666 7777 8888 9999 aaaa
         x = 0
         for infokey in chongfu_liest:
             x += 1
@@ -195,23 +193,41 @@ def new_mul_rename(files, chongfu_liest,flag=1):
 
 
 def new_isrepeat(files):
-    info_value = None
-    info_value2 = None
-    hozhui_name = None
-    hozhui_name2 = None
-    info_key2 = None
+    video_name_list = []
+    video_frame_list = []
+    video_byte_list = []  # [(720.0, 1280.0), '3442641字节']
     all_videos_info = bianli_(files)
-    chongfu_list = set()
+    # print(all_videos_info)
+    chongfu_list = [[],[],[]]
 
     for info_key, info_value in all_videos_info.items():
-        # print(info_key)
-        hozhui_name = info_key.split(".")[1]
-        for info_key2, info_value2 in all_videos_info.items():
-            hozhui_name2 = info_key2.split(".")[1]
-            if info_value[0] == info_value2[0] and info_value[1] == info_value2[1] and hozhui_name == hozhui_name2:
-                chongfu_list.add(info_key2)
+        video_name_list.append(info_key)
+        video_frame_list.append(info_value[0])
+        video_byte_list.append(info_value[1])
+
+    for i in range(0, len(video_name_list)):
+
+        # print("video_frame_list:" + str(video_frame_list))
+        if (i + 1) <= len(video_frame_list) - 1:  # 保证在索引内部
+            if video_name_list[i] == video_name_list[i + 1]:  # 除去自己
+                continue
+            else:
+                if video_frame_list[i] == video_frame_list[i + 1]:
+                    if video_byte_list[i] == video_byte_list[i + 1]:
+                        # print(video_name_list[i])
+                        chongfu_list[0].append((video_name_list[i], video_name_list[i + 1]))
+                        chongfu_list[1].append(video_frame_list[i])
+                        chongfu_list[2].append(video_byte_list[i])
+
+
+    # else:
+    # if video_frame_list[i]
+    # chongfu_list.add(info_key2)
+
     # new_mul_rename(files,x=x,chongfu_liest=chongfu_list,flag=2)
     return chongfu_list  # 返回集合
+
+
 #
 
 def kaitou_name_operator(n):
@@ -227,7 +243,7 @@ def kaitou_name_operator(n):
     shang = math.ceil(n / 36)  #
     k = 0
     z = 0
-    while(z <= shang):
+    while (z <= shang):
         if n == 0:
             int_name_1 = "0000"
             return int_name_1
@@ -238,7 +254,7 @@ def kaitou_name_operator(n):
             if int_name == 0:
                 name_0000 = str(int_name) * 4
 
-            # print(int_name)
+                # print(int_name)
                 return name_0000
             else:
                 return str(int_name)
@@ -270,6 +286,3 @@ def clearup(files):
             x = x.replace(newname2, "")
             print(x)
             os.rename(i, x)
-
-
-

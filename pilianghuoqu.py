@@ -36,8 +36,15 @@ def main():
         if flag == '2':
             files = os.listdir(file_path)
             print("\n\t=====\t重复文件结果如下\t=====\n")
-            for i in func.new_isrepeat(files):
-                print("\t\t" + i)
+            chongfuList = func.new_isrepeat(files)
+            video_name_list = chongfuList[0]
+            video_frame_list = chongfuList[1]
+            video_byte_list = chongfuList[2]
+
+            for i in range(0, len(video_name_list)):
+                # print("分辨率和字节为：%s %s" % ())
+                # print("\t\t" + "分辨率为%s, 字节为%s的重复文件有: " % (str(video_frame_list[i]), video_byte_list[i]))
+                print("\t\t" + str(video_name_list[i]) +"--"+ str(video_frame_list[i]) +"-"+ str(video_byte_list[i]))
             print("\n\t=====\t=====\t=====\n")
 
         # if flag == '3':
@@ -48,9 +55,14 @@ def main():
 
         if flag == '4':
             files = os.listdir(file_path)
-            func.new_mul_rename(files,chongfu_liest=func.new_isrepeat(files),flag=1)
+            chongfuList = func.new_isrepeat(files)
+            video_name_list2 = chongfuList[0]
+            func.new_mul_rename(files,chongfu_liest=video_name_list2,flag=1)
+
             files = os.listdir(file_path)
-            func.new_mul_rename(files, chongfu_liest=func.new_isrepeat(files), flag=2)
+            chongfuList = func.new_isrepeat(files)
+            video_name_list2 = chongfuList[0]
+            func.new_mul_rename(files, chongfu_liest=video_name_list2, flag=2)
             # func.new_isrepeat(files)
             # print(func.kaitou_name_operator(75))
 
