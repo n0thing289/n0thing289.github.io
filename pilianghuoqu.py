@@ -40,7 +40,7 @@ def main():
             video_name_list = chongfuList[0]
             video_frame_list = chongfuList[1]
             video_byte_list = chongfuList[2]
-            waiting_list = [[], []]
+
             # for j in range(0,len(video_name_list)):
             #     flag_dict[video_name_list[i]] = str(video_frame_list[i]) +"-"+ str(video_byte_list[i])
             value_list = []
@@ -66,9 +66,21 @@ def main():
             #     # 再输出其他无重复次数的索引对应的文件名
             #
             #     print(waiting_list)
+            last_output = None
             for i in range(0, len(video_name_list)):
+                for j in range(0, 2):
+                    now_input = video_name_list[i][j]
 
-                print("\t\t" + "分辨率为%s, 字节为%s的重复文件有: %s"% (str(video_frame_list[i]), video_byte_list[i], str(video_name_list[i])))
+                    # print("last: " + str(last_output))
+                    # print("now: " + str(video_name_list[i][j]))
+                    if now_input != last_output:
+                        print(video_name_list[i][j])
+                    last_output = now_input
+                # print("\t\t" + "分辨率为%s, 字节为%s的重复文件有: %s"% (str(video_frame_list[i]), video_byte_list[i], str(video_name_list[i])))
+                # print(value_list[i])
+            print(video_name_list)
+            print(video_frame_list)
+            print(video_byte_list)
             print("\n\t=====\t=====\t=====\n")
 
         # if flag == '3':
