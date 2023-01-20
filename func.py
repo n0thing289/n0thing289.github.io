@@ -193,43 +193,60 @@ def new_mul_rename(files, chongfu_liest, flag=1):
 
 
 def new_isrepeat(files):
-    video_name_list = []
-    video_frame_list = []
-    video_byte_list = []  # [(720.0, 1280.0), '3442641字节']
-    all_videos_info = bianli_(files)
-    # print(all_videos_info)
-    chongfu_list = [[],[],[]]
 
-    for info_key, info_value in all_videos_info.items():
-        video_name_list.append(info_key)
-        video_frame_list.append(info_value[0])
-        video_byte_list.append(info_value[1])
+    all_videos_info = bianli_(files)  # {filename:[(分辨率)，字节大小]}
+    # 1. 转成列表进行处理
+    fileNamelist = [] # 这两个的唯一重要的关系就是索引
+    valuelist = []
 
-    for i in range(0, len(video_name_list)):
-
-        # print("video_frame_list:" + str(video_frame_list))
-        if (i + 1) <= len(video_frame_list) - 1:  # 保证在索引内部
-            if video_name_list[i] == video_name_list[i + 1]:  # 除去自己
-                continue
-            else:
-                if video_frame_list[i] == video_frame_list[i + 1]:
-                    if video_byte_list[i] == video_byte_list[i + 1]:
-                        # print(video_name_list[i])
-                        chongfu_list[0].append((video_name_list[i], video_name_list[i + 1]))
-                        chongfu_list[1].append(video_frame_list[i])
-                        chongfu_list[2].append(video_byte_list[i])
+    for key, value in all_videos_info.items():
+        fileNamelist.append(key)
+        valuelist.append(value)
 
 
-    # else:
-    # if video_frame_list[i]
-    # chongfu_list.add(info_key2)
+    print(fileNamelist)
+    print(valuelist)
+    # 2. 改进匹配机制（之前实现的算法弊端很大）
+    # 1 2 3 4 5 个视频文件
+    # 1 -> 2 3 4 5
+    # 2 -> 3 4 5
+    # 3 -> 4 5
+    # 4 -> 5
+    # 两两匹配他们的valuelist的元素值, 由上可见,5个视频文件,有4趟,
+    # 第一趟匹配4轮
+    # 第二趟匹配3轮
+    # ...
+    repeated_dict = {}
+    for i in range(len(valuelist)-1):
+        print(i)
+        for j in range(i+1, len(valuelist)):
+            print(j,end='')
+            if valuelist[i] == valuelist[j]:
+                if str(valuelist[i]) not in repeated_dict.keys():
+                    repeated_dict[str(valuelist[i])] = []
+                    repeated_dict[str(valuelist[i])].append(fileNamelist[i])
+                    repeated_dict[str(valuelist[i])].append(fileNamelist[j])
+                else:
+                    if fileNamelist[i] in repeated_dict[str(valuelist[i])]:
+                        continue
+                    else:
+                        repeated_dict[str(valuelist[i])].append(fileNamelist[i])
 
-    # new_mul_rename(files,x=x,chongfu_liest=chongfu_list,flag=2)
-    return chongfu_list  # 返回集合
+                    if fileNamelist[j] in repeated_dict[str(valuelist[i])]:
+                        continue
+                    else:
+                        repeated_dict[str(valuelist[i])].append(fileNamelist[j])
+        print()
 
+    print(repeated_dict)
+    #        {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
+    #n[]     {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4', '测试视频2号.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号 - 副本.mp4', '测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
+    #if-else {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号 - 副本.mp4']}
+    #i+1     {"[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
 
-#
-
+    # TODO 为啥自己原本的没有嘞???
+    # {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号 - 副本 (2).mp4', '测试视频1号 - 副本.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本 (2).mp4', '测试视频2号 - 副本 (3).mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
+    # {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号 - 副本 (2).mp4', '测试视频1号 - 副本.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本 (2).mp4', '测试视频2号 - 副本 (3).mp4', '测试视频2号 - 副本 - 副本.mp4', '测试视频2号 - 副本.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
 def kaitou_name_operator(n):
     """
     1 -- 0000    10 -- aaaa
