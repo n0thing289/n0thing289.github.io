@@ -36,7 +36,20 @@ def main():
         if flag == '2':
             files = os.listdir(file_path)
             print("\n\t=====\t重复文件结果如下\t=====\n")
-            func.new_isrepeat(files)
+            repeated_dict = func.new_isrepeat(files)
+            for key_str, value in repeated_dict.items():
+
+                # print(key_str)
+                # print("分辨率 = %s × %s,字节大小 = %s 的条件下有 %d 个重复文件:" % (key_str[0][0],key_str[0][1], key_str[1],len(value)))
+                print("\t\t在 %s 条件下有 %d 个重复的视频文件:" % (key_str, len(value)))
+                for i in range(0, len(value)):
+
+                    print("\t\t\t" + str(value[i]))
+
+            print("\n\t=====\t============\t=====\n")
+
+                # print(value)
+
 
 
 

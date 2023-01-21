@@ -204,8 +204,8 @@ def new_isrepeat(files):
         valuelist.append(value)
 
 
-    print(fileNamelist)
-    print(valuelist)
+    # print(fileNamelist)
+    # print(valuelist)
     # 2. 改进匹配机制（之前实现的算法弊端很大）
     # 1 2 3 4 5 个视频文件
     # 1 -> 2 3 4 5
@@ -216,11 +216,11 @@ def new_isrepeat(files):
     # 第一趟匹配4轮
     # 第二趟匹配3轮
     # ...
-    repeated_dict = {}
+    repeated_dict = {}  # {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号 - 副本 (2).mp4', '测试视频1号 - 副本.mp4', '测试视频1号.mp4']}
     for i in range(len(valuelist)-1):
-        print(i)
+        # print(i)
         for j in range(i+1, len(valuelist)):
-            print(j,end='')
+            # print(j,end='')
             if valuelist[i] == valuelist[j]:
                 if str(valuelist[i]) not in repeated_dict.keys():
                     repeated_dict[str(valuelist[i])] = []
@@ -228,25 +228,28 @@ def new_isrepeat(files):
                     repeated_dict[str(valuelist[i])].append(fileNamelist[j])
                 else:
                     if fileNamelist[i] in repeated_dict[str(valuelist[i])]:
-                        continue
+                        pass
                     else:
                         repeated_dict[str(valuelist[i])].append(fileNamelist[i])
 
                     if fileNamelist[j] in repeated_dict[str(valuelist[i])]:
-                        continue
+                        pass
                     else:
                         repeated_dict[str(valuelist[i])].append(fileNamelist[j])
-        print()
+        # print()
 
-    print(repeated_dict)
+    # print(repeated_dict)
     #        {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
     #n[]     {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4', '测试视频2号.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号 - 副本.mp4', '测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
     #if-else {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号 - 副本.mp4']}
     #i+1     {"[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
 
-    # TODO 为啥自己原本的没有嘞???
+    # TODO 为啥自己原本的没有嘞??? solved!
     # {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号 - 副本 (2).mp4', '测试视频1号 - 副本.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本 (2).mp4', '测试视频2号 - 副本 (3).mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
     # {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号 - 副本 (2).mp4', '测试视频1号 - 副本.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本 (2).mp4', '测试视频2号 - 副本 (3).mp4', '测试视频2号 - 副本 - 副本.mp4', '测试视频2号 - 副本.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
+    # {"[(720.0, 1280.0), '3442641字节']": ['测试视频1号 - 副本 (2).mp4', '测试视频1号 - 副本.mp4', '测试视频1号.mp4'], "[(720.0, 1280.0), '5223270字节']": ['测试视频2号 - 副本 (2).mp4', '测试视频2号 - 副本 (3).mp4', '测试视频2号 - 副本 - 副本.mp4', '测试视频2号 - 副本.mp4', '测试视频2号.mp4'], "[(1024.0, 576.0), '2953045字节']": ['测试视频3号 - 副本.mp4', '测试视频3号.mp4']}
+
+    return repeated_dict
 def kaitou_name_operator(n):
     """
     1 -- 0000    10 -- aaaa
