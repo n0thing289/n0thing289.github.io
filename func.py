@@ -2,7 +2,7 @@ import os
 import cv2
 import math
 import re
-
+file_path = os.getcwd()
 
 def get_video_frame_size(file_name):
     """获取视频分辨率，并返回视频分辨率"""
@@ -150,10 +150,29 @@ def text_splitor(file_name, input_name, asign):
     2.将分辨率，字节大小和格式三个都一样的视频，在它们的文件名开头写入0000-zzzz这种格式
 """
 
-
-def new_mul_rename(files, chongfu_liest, flag=1):
-    all_video_info = bianli_(files)
+def new_mul_rename1(chongfu_liest, flag=1):
+    # 0000 1111 2222 3333 4444 5555 6666 7777 8888 9999 aaaa
     if flag == 1:
+        x = 0
+        for infokey in chongfu_liest:
+            x += 1
+            qian_name = kaitou_name_operator(n=x)
+            re_name = qian_name
+            name_list = infokey.split(".")
+            name_list.insert(0, re_name)
+            name_list.insert(-1, ".")
+            # print(name_list)
+            name = ""
+            for n in name_list:
+                name += n
+            os.rename(infokey, name)
+
+
+def new_mul_rename2(flag = 2):
+    if flag == 2:
+        files = os.listdir(file_path)
+        all_video_info = bianli_(files)
+        # TODO 解决升级new_isrepeat()后,修改名字的bug
         for info_key, info_value in all_video_info.items():
             name_list = info_key.split('.')  # ["767","750-1000.","mp4"]
             # print(name_list)
@@ -171,25 +190,8 @@ def new_mul_rename(files, chongfu_liest, flag=1):
             # print(info_key)# 别忘了是在新得基础上拆成列表
             os.rename(info_key, name)
 
-    if flag == 2:
-        # 0000 1111 2222 3333 4444 5555 6666 7777 8888 9999 aaaa
-        x = 0
-        for infokey in chongfu_liest:
-            x += 1
-            qian_name = kaitou_name_operator(n=x)
-            re_name = qian_name
-            name_list = infokey.split(".")
-            name_list.insert(0, re_name)
-            name_list.insert(-1, ".")
-            # print(name_list)
-            name = ""
-            for n in name_list:
-                name += n
-            print("\n\t=====\t处理结果如下\t=====\n")
-            print("\t\t" + name)
-            print("\n\t=====\t=====\t=====\n")
-            # print(info_key)# 别忘了是在新得基础上拆成列表
-            os.rename(infokey, name)
+
+
 
 
 def new_isrepeat(files):
