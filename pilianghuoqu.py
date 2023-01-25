@@ -18,7 +18,7 @@ def main():
               "\n" +
               "按3实现对重复文件进行文件名美化整理\n" +
               "按4实现清除程序所作的更改\n" +
-              "按exit推出程序\n"
+              "按e推出程序\n"
               "***************************************************")
         flag = input()
         if flag == '1':
@@ -55,15 +55,18 @@ def main():
             files = os.listdir(file_path)
             chongfu_dict = func.new_isrepeat(files)
             # print(chongfu_dict)
+            print("\n\t=====\t美化操作结果如下\t=====\n")
             for name_list in chongfu_dict.values():
                 func.new_mul_rename1(chongfu_liest=name_list, flag=1)
             func.new_mul_rename2(flag=2)
+            print("\t\t所有文件美化完成！")
+            print("\n\t=====\t============\t=====\n")
 
         if flag == '4':
             files = os.listdir(file_path)
             func.clearup(files)
 
-        if flag == 'exit':
+        if flag in 'exit':
             break
 
 

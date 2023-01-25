@@ -299,12 +299,23 @@ def kaitou_name_operator(n):
 
 def clearup(files):
     """用于清除我所做的更改"""
+    result1_name = None
+    result2_name = None
+    x = None
+    print("\n\t=====\t撤销操作结果如下\t=====\n")
     for i in files:
         if ".mp4" in i:
-            result_list = re.findall(r"^....|...-....", i)
-            newname1 = result_list[0]
-            newname2 = result_list[1]
-            x = i.replace(newname1, "")
-            x = x.replace(newname2, "")
-            print(x)
+            if re.findall(r"^(\d{4})+", i):
+                result1_name = re.findall(r"^(\d{4})+", i)[0]
+                x = i.replace(result1_name, "")
+            if re.findall(r"(\d*?-\d*?)+\.", i):
+                result2_name = re.findall(r"(\d*?-\d*?)+\.", i)[0]
+                x = x.replace(result2_name, "")
+
+            # x = i.replace(result1_name, "")
+            # x = x.replace(result2_name, "")
+
+            print("\t\t" + i + " --> " + x)
+
             os.rename(i, x)
+    print("\n\t=====\t============\t=====\n")
