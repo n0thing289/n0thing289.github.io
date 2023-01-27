@@ -305,17 +305,24 @@ def clearup(files):
     print("\n\t=====\t撤销操作结果如下\t=====\n")
     for i in files:
         if ".mp4" in i:
-            if re.findall(r"^(\d{4})+", i):
-                result1_name = re.findall(r"^(\d{4})+", i)[0]
-                x = i.replace(result1_name, "")
-            if re.findall(r"(\d*?-\d*?)+\.", i):
-                result2_name = re.findall(r"(\d*?-\d*?)+\.", i)[0]
-                x = x.replace(result2_name, "")
+            result1_name = re.findall(r"^(\d{4})", i)[0]
+            x = i.replace(result1_name, "")
 
-            # x = i.replace(result1_name, "")
-            # x = x.replace(result2_name, "")
+            result2_name = re.findall(r"(\d*?-.*\d*?)\.", i)[0]
+            x = x.replace(result2_name, "")
+
+
 
             print("\t\t" + i + " --> " + x)
-
-            os.rename(i, x)
+            # os.rename(i, x)
     print("\n\t=====\t============\t=====\n")
+
+    # TODOFinished 解决撤销时的新bug
+    """
+        00000000one(1)720-1280720-1280.mp4 --> one(1)720-.mp4
+		00000000three(1)720-1280720-1280.mp4 --> three(1)720-.mp4
+		00000000two(1)1024-5761024-576.mp4 --> two(1)1024-.mp4
+		11111111one(2)720-1280720-1280.mp4 --> one(2)720-.mp4
+		11111111three(2)720-1280720-1280.mp4 --> three(2)720-.mp4
+		11111111two(2)1024-5761024-576.mp4 --> two(2)1024-.mp4
+    """
