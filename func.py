@@ -4,6 +4,9 @@ import math
 import re
 file_path = os.getcwd()
 
+# 常见视频格式列表
+videoTypeList = [".avi",".wmv",".mpeg",".mp4",".m4v",".mov",".asf",".flv",".f4v",".rmvb",".rm",".3gp",".vob",".mkv"]
+
 def get_video_frame_size(file_name):
     """获取视频分辨率，并返回视频分辨率"""
     cap = cv2.VideoCapture(file_name)
@@ -37,8 +40,8 @@ def bianli_(files_list):
     for f in files_list:
 
         file_hozhui = get_sep_file(f)[1]
-
-        if file_hozhui == '.mp4':
+        # // 增加视频格式种类
+        if file_hozhui == '.mp4' or file_hozhui in videoTypeList:
             video_name = get_sep_file(f)[0] + file_hozhui
 
             # 拿到字节大小
@@ -51,7 +54,7 @@ def bianli_(files_list):
 
     return all_video_info
 
-
+# 已弃用
 def is_repeat(files_list):
     """判断重复，用两个字典循环遍历判断重复的分辨率，字节大小，由于文件名不能重名，和字典的键一样"""
     all_videos_info = bianli_(files_list)
@@ -81,7 +84,7 @@ def is_repeat(files_list):
     else:
         print("\t\t此目录下只有一个视频文件无法进行多个视频查重")
 
-
+# 已弃用
 def mul_rename(files_list, input_name):
     all_video_info = bianli_(files_list)
     flag = input("按1在原来的名字增加字符,按2批量删去输入的字符,按下2之后在源码100行中修改删除的模式 asign")
@@ -108,7 +111,7 @@ def mul_rename(files_list, input_name):
 
         print("%s >>> %s" % (old_video_name_key, new_video_name))
 
-
+# 已弃用
 def text_splitor(file_name, input_name, asign):
     # file_name = 'test_video_2美女视频meinv666.mp4'
     # input_name = "meinv"
@@ -304,17 +307,20 @@ def clearup(files):
     x = None
     print("\n\t=====\t撤销操作结果如下\t=====\n")
     for i in files:
-        if ".mp4" in i:
-            result1_name = re.findall(r"^(\d{4})", i)[0]
-            x = i.replace(result1_name, "")
+        # range ->  [ ) ->  0 <= x < len(videoTypeList)
+        for j in range(0, len(videoTypeList)):# 以标准java式索引遍历数组
+            if videoTypeList[j] in i:
+            # if ".mp4" in i or i in videoTypeList:
+                result1_name = re.findall(r"^(\d{4})", i)[0]
+                x = i.replace(result1_name, "")
 
-            result2_name = re.findall(r"(\d*?-.*\d*?)\.", i)[0]
-            x = x.replace(result2_name, "")
+                result2_name = re.findall(r"(\d*?-.*\d*?)\.", i)[0]
+                x = x.replace(result2_name, "")
 
 
+                os.rename(i, x)
+                print("\t\t" + i + " --> " + x)
 
-            print("\t\t" + i + " --> " + x)
-            # os.rename(i, x)
     print("\n\t=====\t============\t=====\n")
 
     # TODOFinished 解决撤销时的新bug
