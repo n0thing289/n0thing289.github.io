@@ -4,16 +4,16 @@ import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://mister-hope.github.io",
+  hostname: "https://n0thing289.github.io",
 
   author: {
-    name: "Mr.Hope",
+    name: "n0thing289",
     url: "https://mister-hope.com",
   },
 
   logo: "https://theme-hope-assets.vuejs.press/logo.svg",
 
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "n0thing289/n0thing289.github.io",
 
   docsDir: "src",
 
@@ -29,7 +29,7 @@ export default hopeTheme({
 
   // 博客相关
   blog: {
-    description: "一个前端开发者",
+    description: "一个Java开发者",
     intro: "/intro.html",
     medias: {
       Baidu: "https://example.com",

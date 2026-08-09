@@ -2,6 +2,8 @@ import { navbar } from "vuepress-theme-hope";
 
 export default navbar([
   "/",
+  "/blog/",
+  "/hermes/",
   "/demo/",
   {
     text: "博文",
