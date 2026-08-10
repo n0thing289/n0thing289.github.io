@@ -19,6 +19,11 @@ export default hopeTheme({
 
   // 导航栏
   navbar,
+  navbarLayout:{
+    start: ["Brand"],
+    center: [],
+    end: [ "Search", "Links", "Language", "Repo", "Outlook"],
+  },
 
   // 侧边栏
   sidebar,
