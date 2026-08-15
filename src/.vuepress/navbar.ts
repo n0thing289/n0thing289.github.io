@@ -4,7 +4,7 @@ export default navbar([
   "/",
   // "/blog/",
   "/hermes/",
-  "/posts/",
+  //"/posts/",
   // "/demo/",
   // {
   //   text: "演示的博客文章",
