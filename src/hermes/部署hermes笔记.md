@@ -79,13 +79,21 @@ hyper + 虚拟化平台 + WSL
 
 ## Windows原生安装到D盘
 
-如下代码所示，有需要需要替换下载脚本链接
+如下代码所示，官方下载脚本
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1))) `
+& ([scriptblock]::Create((irm https://hermes-agent.nousresearch.com/install.ps1))) `
 -HermesHome "D:\MyApps\Hermes" `
 -InstallDir "D:\MyApps\Hermes\hermes-agent" `
 -ShowResolvedPaths
+```
+
+中文镜像下载脚本
+
+```powershell
+& ([scriptblock]::Create((irm https://res1.hermesagent.org.cn/install.ps1))) `
+-HermesHome "D:\MyApps\Hermes" `
+-InstallDir "D:\MyApps\Hermes\hermes-agent"
 ```
 
 
