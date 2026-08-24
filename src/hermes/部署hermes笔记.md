@@ -77,6 +77,19 @@ hyper + 虚拟化平台 + WSL
 
 
 
+## Windows原生安装到D盘
+
+如下代码所示，有需要需要替换下载脚本链接
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1))) `
+-HermesHome "D:\MyApps\Hermes" `
+-InstallDir "D:\MyApps\Hermes\hermes-agent" `
+-ShowResolvedPaths
+```
+
+
+
 
 
 
@@ -111,6 +124,58 @@ hyper + 虚拟化平台 + WSL
 
 ## 实际案例-优先安装桌面版
 
+windows：
+
 执行`hermes desktop` 命令
 
 然后右键`桌面版`窗口 => 再右键 => 找到属性 => 打开文件所在位置 => 为它创建一个快捷方式 
+
+
+
+mac：
+
+依旧执行`hermes desktop`命令
+
+1. 找到启动后的hermes desktop，右键，选择`在访达中显示`![image-20260817230437784](./部署hermes笔记.assets/image-20260817230437784.png)
+2. 然后将这里出现的`hermes`，按住拖动到`应用程序`中即可![image-20260817230550472](./部署hermes笔记.assets/image-20260817230550472.png)
+3. 然后`应用程序`中就能看到`hermes`了，到此就已经帮助用户创建了快捷方式
+
+
+
+## 实际案例-备份和导入
+
+全量备份 hermes backup -o hermes-backup.zip
+
+安装空白本体后导入 hermes import .\hermes-backup.zip
+
+## 实际案例-满血版
+
+满血版就是
+
+- 设置soul文件
+- 接入记忆系统
+- 接入图像生成`fal.ai`
+- 语音文字edge tts(内置)
+- 全网抓取工具（Firecrawl）
+- 全网搜索工具（tavliy）
+- 语音识别 hermes tools install whisper
+
+
+
+### skills 推荐
+
+>排除内置的skill
+
+-  clawhub/pdf-markdown-converter
+- ppt设计类
+  - 让ppt设计更加好看：hermes skills install clawhub/ppt-design-master
+  - 中文公关写作：hermes skills install clawhub/chinese-official-writing
+  - [alchaincyf/huashu-design: Huashu Design · HTML-native design skill for Claude Code · Claude Code 里 HTML 原生的设计 skill · 高保真原型 / 幻灯片 / 动画 + 20 设计哲学 + 5 维评审 + MP4 导出 · Agent-agnostic](https://github.com/alchaincyf/huashu-design)
+
+[hugohe3/ppt-master: AI turns documents or topics into real, native PowerPoint decks—with native shapes, transitions and animations, data-backed charts and tables on demand, audio narration from speaker notes, and support for your own .pptx templates. · by Hugo He](https://github.com/hugohe3/ppt-master)
+
+
+
+
+
+[[中文\] Windows + 中国网络：Hindsight 本地部署完整指南（踩坑记录） · Issue #1517 · vectorize-io/hindsight](https://github.com/vectorize-io/hindsight/issues/1517)
