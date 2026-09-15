@@ -180,10 +180,4 @@ mac：
   - 中文公关写作：hermes skills install clawhub/chinese-official-writing
   - [alchaincyf/huashu-design: Huashu Design · HTML-native design skill for Claude Code · Claude Code 里 HTML 原生的设计 skill · 高保真原型 / 幻灯片 / 动画 + 20 设计哲学 + 5 维评审 + MP4 导出 · Agent-agnostic](https://github.com/alchaincyf/huashu-design)
 
-[hugohe3/ppt-master: AI turns documents or topics into real, native PowerPoint decks—with native shapes, transitions and animations, data-backed charts and tables on demand, audio narration from speaker notes, and support for your own .pptx templates. · by Hugo He](https://github.com/hugohe3/ppt-master)
 
-
-
-
-
-[[中文\] Windows + 中国网络：Hindsight 本地部署完整指南（踩坑记录） · Issue #1517 · vectorize-io/hindsight](https://github.com/vectorize-io/hindsight/issues/1517)
